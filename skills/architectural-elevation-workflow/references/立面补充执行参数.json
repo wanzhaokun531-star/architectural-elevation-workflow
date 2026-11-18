@@ -1,0 +1,263 @@
+{
+  "schema": "bce.elevation-annotation-skill-policy.v1",
+  "effectiveDate": "2026-11-15",
+  "mainLevels": {
+    "nativeClass": "TDbSymbElevation",
+    "defaultSides": [
+      "left",
+      "right"
+    ],
+    "exception": "current_project_explicit_single_side_only_with_source",
+    "requiredHeightSource": "actual_current_project_ground_floors_eaves_ridges",
+    "matrixKey": [
+      "view",
+      "side",
+      "controlHeightMeaning",
+      "datum"
+    ],
+    "uniqueActualObjectPerExpectedRow": true,
+    "tipToOutermostSideDimensionPaperMM": 6,
+    "baseline": "native_to_second_side_vertical_dimension_baseline_at_same_y",
+    "normal": {
+      "triangle": "hollow_downward",
+      "text": "upper_left"
+    },
+    "neighborLowerOutdoor": {
+      "triangle": "hollow_upward",
+      "text": "lower_left",
+      "alignTipXWithMainZero": true
+    },
+    "rightSide": "verify_upright_legibility_sign_and_posture_after_layout_or_mirror",
+    "noFixedHeightListOrCount": true,
+    "baselineConnection": {
+      "target": "secondSideVerticalDimension",
+      "sameHeight": true,
+      "requireActualDimensionStation": true,
+      "maintainTipOutwardFromFirstPaperMM": 6,
+      "referenceTipToConnectionPaperMM": 14,
+      "preserveMeasuredElevation": true
+    },
+    "closePairLayout": {
+      "trigger": "actual_symbol_or_text_clearance_insufficient",
+      "lowerMarkTriangle": "hollow_upward",
+      "lowerMarkText": "below_baseline_upright",
+      "preserve": [
+        "tip",
+        "value",
+        "baselineEndpoint",
+        "nativeType"
+      ],
+      "fixedGapThresholdMM": null
+    }
+  },
+  "controlLines": {
+    "layer": "DOTE",
+    "aci": 24,
+    "layerLinetype": "Continuous",
+    "entityLinetype": "DOTE",
+    "horizontal": {
+      "source": "verified_actual_control_elevations",
+      "requiredRolesWhenPresent": [
+        "ground",
+        "floor",
+        "eaves",
+        "roofRidge"
+      ],
+      "additionalRoles": "verified_relevant_roof_controls",
+      "coverage": "view_specific_role_check",
+      "distinguishFromRoofDimensionRows": true
+    },
+    "vertical": {
+      "source": "confirmed_plan_exterior_wall_axes",
+      "required": "each_view_left_and_right_effective_exterior_wall_axis",
+      "alignedTo": [
+        "bottomAxisNumber",
+        "bottomDimensionStation"
+      ],
+      "extent": "from_axis_leader_connection_through_actual_wall_to_verified_top_control",
+      "unknownAxis": "record_pending_with_source_location"
+    }
+  },
+  "componentLayers": {
+    "ornamentalColumn": "J-LM-立面线脚1-0.18",
+    "windowCasing": "J-LM-立面线脚1-0.18",
+    "doorCasing": "J-LM-立面线脚1-0.18",
+    "frameSashAndMullions": "A-立面门窗",
+    "openingLines": "A-立面门窗开启线",
+    "checkNestedEffectiveLayers": true,
+    "windowCasingBlock": {
+      "mode": "separate_modelspace_insert",
+      "anchor": "same_opening_datum_as_frame",
+      "association": "opening_instance_id",
+      "skipWhenNotVisible": true
+    },
+    "segmentLayerAssignment": {
+      "sourceOwnership": [
+        "fullInstancePath",
+        "sourceEdge",
+        "adjacentFaces",
+        "componentRole"
+      ],
+      "retainOwnershipThrough": [
+        "projection",
+        "occlusionClipping",
+        "deduplication",
+        "blockAssembly"
+      ],
+      "unknownRole": "flagForReview",
+      "mixedPolyline": "splitAtActualRoleBoundaryPreservingGeometry",
+      "sharedDefinitions": "separateOnlyReferencesRequiringDifferentMemberLayers",
+      "reopenCheckFrom": "verifiedSourceComponentInventory",
+      "reopenCheckEffectiveProperties": [
+        "layer",
+        "color",
+        "layer0Inheritance",
+        "ByBlock",
+        "ByLayer"
+      ]
+    }
+  },
+  "roofFill": {
+    "scope": "elevationOnly",
+    "defaultMode": "curvedRoofTile",
+    "explicitProjectOverride": "none",
+    "surfaceRoles": [
+      "mainSlopedRoof",
+      "decorativeSlopedRoof"
+    ],
+    "boundary": "final_visible_projected_surface_loops_after_occlusion",
+    "exclude": [
+      "flatRoof",
+      "flatCanopy",
+      "fascia",
+      "corniceMoulding",
+      "walls",
+      "openings",
+      "occludingObjects"
+    ],
+    "nativeClass": "AcDbHatch",
+    "pattern": "弯瓦屋面",
+    "layer": "立面填充",
+    "aci": 252,
+    "colorMethod": "ByLayer",
+    "patternResource": "skill://architectural-elevation-workflow/assets/弯瓦屋面.pattern.json",
+    "sampleResource": "skill://architectural-elevation-workflow/assets/弯瓦屋面_用户图例.png",
+    "phase": "shared_per_view_for_matching_pattern_and_scale",
+    "drawOrder": "behind_visible_outlines_and_annotations",
+    "reopenChecks": [
+      "pattern",
+      "boundaryCoverage",
+      "islands",
+      "noLeakage",
+      "noDuplicateFill",
+      "visualContrast"
+    ]
+  },
+  "verification": {
+    "dimension": [
+      "actual_stations",
+      "actual_values",
+      "continuous_chain",
+      "segment_sum",
+      "whole_chain_and_shared_node_editability"
+    ],
+    "axis": [
+      "native_type",
+      "number",
+      "circle_position",
+      "side_visibility",
+      "leader_through_correct_stations",
+      "horizontal_roof_control_coverage",
+      "projected_exterior_wall_axis_and_bottom_station_alignment"
+    ],
+    "level": [
+      "native_type",
+      "project_datum_value",
+      "apex",
+      "baseline",
+      "posture",
+      "upright_text",
+      "expected_actual_coverage",
+      "native_baseline_meets_second_vertical_dimension_at_same_height",
+      "lower_mark_flipped_when_actual_clearance_requires"
+    ],
+    "text": [
+      "actual_font",
+      "nominal_height",
+      "glyph_height",
+      "scale",
+      "internal_effective_color",
+      "orientation",
+      "avoidance"
+    ],
+    "drawingAfterModification": [
+      "independent_save_reopen",
+      "native_object_data_checks",
+      "actual_final_view_check_both_ends",
+      "all_annotation_bounds_and_neighbor_view_windows"
+    ],
+    "missingExpectedMainRowsAllowed": 0,
+    "unchangedOriginalCountIsNotCoverage": true,
+    "component": [
+      "effective_column_and_casing_layer",
+      "frame_sash_and_mullion_layer",
+      "separately_selectable_window_and_casing_with_shared_opening_anchor",
+      "source_inventory_to_visible_segments_and_nested_effective_layer_color_after_reopen"
+    ],
+    "roofFill": [
+      "pattern",
+      "boundaryCoverage",
+      "islands",
+      "noLeakage",
+      "noDuplicateFill",
+      "visualContrast"
+    ]
+  },
+  "sideSpacing": {
+    "datum": "actual_exterior_wall_axis",
+    "direction": "outward_in_view_local_horizontal_per_side",
+    "referenceScaleDenominator": 100,
+    "referenceDrawingUnitMM": 1,
+    "relations": [
+      {
+        "from": "wallAxis",
+        "to": "visibleExtensionStart",
+        "paperMM": 18
+      },
+      {
+        "from": "visibleExtensionStart",
+        "to": "thirdBaseline",
+        "paperMM": 6
+      },
+      {
+        "from": "thirdBaseline",
+        "to": "secondBaseline",
+        "paperMM": 8
+      },
+      {
+        "from": "secondBaseline",
+        "to": "firstOutermostBaseline",
+        "paperMM": 8
+      },
+      {
+        "from": "firstOutermostBaseline",
+        "to": "mainLevelTriangleTip",
+        "paperMM": 6
+      }
+    ],
+    "outwardOffsetPaperMM": {
+      "visibleExtensionStart": 18,
+      "thirdBaseline": 24,
+      "secondBaseline": 32,
+      "firstOutermostBaseline": 40,
+      "mainLevelTriangleTip": 46
+    },
+    "offsetsAt1To100MM": [
+      1800,
+      2400,
+      3200,
+      4000,
+      4600
+    ]
+  }
+}

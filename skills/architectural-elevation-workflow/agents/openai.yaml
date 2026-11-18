@@ -1,0 +1,4 @@
+interface:
+  display_name: "效果图转立面cad"
+  short_description: "结合平面和模型生成四立面，或将已有立面深化成施工图并完成核验"
+  default_prompt: "请使用 $architectural-elevation-workflow，按提供的平面、模型或立面 DWG 生成或深化建筑立面，按现行入口处理轴线、标高、构件图层和屋面填充，交付可编辑 DWG 并核验。"

@@ -1,0 +1,4 @@
+interface:
+  display_name: "建筑施工图标注规则"
+  short_description: "统一建筑平面、立面与剖面的尺寸、轴号、标高及文字规则"
+  default_prompt: "使用 $architectural-annotation-rules 按现行规则检查或整理这套图纸的尺寸、轴号、标高和文字。"
