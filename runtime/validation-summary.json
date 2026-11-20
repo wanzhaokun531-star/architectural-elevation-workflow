@@ -1,0 +1,37 @@
+{
+  "baselineVersion": "2026.11.19.4",
+  "baselineReleaseSHA256": "f890f66ede72343bb0204d8c272b636d7067ef566ca2714345af001f0e46ab28",
+  "nativeSourceFiles": {
+    "native/build.cmd": "08b8b732118ba6797bac7503b798d605b9565aaa0b2c523f147c78232671ecc2",
+    "native/DimensionTopology.h": "12e6c5ea8410910d5045ab217aad073dcdb7246c8829d4991456ddc30c96939b",
+    "native/MFCommon.inc": "06fd23430bd51fb49ae3a1cb7c82357c6cfc703363601fdaae69afe141d59875",
+    "native/MFGrips.inc": "41c7eaf04d67cdf556c873ab247342e17b59184a2956bac55f695bb0600cb433",
+    "native/MFLevels.inc": "3c71348f20d4a4e28341b2f4b7a63a37e18fa13546a2044fce8a9211b24fab1c",
+    "native/MFPlot.inc": "f8e327c7c9ac5540562399d8863174ed706f8d1753520c49e04fb1175293fcb4",
+    "native/NativeAnnotation.cpp": "7dcea306908628d0840d9e7e38b46e6d64580037d6dc22fd4dca0131421379d8",
+    "native/NativeAnnotation.h": "4f85fd4d6bce5a3000e127eacb5ab8f4226dd17315b0104ab146cee4222581ba",
+    "native/NativeEvidence.cpp": "1b3ca34a61cc2c2db2c42a7fdfd01c029de7be82eae6ce96d9de1c3b363a8fe2",
+    "native/NativeEvidence.h": "c6b083ee0346aa7cdb51090274cccadcb2c6de0aa92a196ad846e11c41c9ebb6",
+    "native/Project222D9DimensionCommon.inc": "0bd29007f245d5fd1d4a59932661ac93ade14be3678af47076b6cce4eba3fd38",
+    "native/RejectionAcceptance.h": "61acdcb41d353450b4051d316b42f074299225b8c9d207ef88b24bc1c6f1b858",
+    "native/RuntimeIdentity.inc": "24595204b97d7cea39e12c4035a92dbb52cee37eac8873778c3d68236a2ab2f6",
+    "native/ZhaoConstruction.cpp": "081c65a4bf3948a8d252ae5434d14b2914a83d3f363df7738a0cc28829171978",
+    "native/ZhaoConstruction.vcxproj": "09a57834d3cbdee2b0b10837b028d951e69dee8f3f7172ad3c7d430c0a13def3",
+    "native-axis/compile_axis.cpp": "c2d11c1bd2371db65798e982f49759691e51470f4777085859b3fc2673413ab5",
+    "native-axis/ZhaoAxis.inc": "966c48508c1363e33151e912cd68358bc451494a55b09523ec2c5be2a4298aa2",
+    "native-dim/ZhaoDimensions.cpp": "ec148373a978766d76d3efe09691e37eb1c3ac366101e62391fcb4e1409020e7",
+    "native-dim/ZhaoDimensions.h": "4ea6dabe907283029c41b01e119132d9035dff1700e8092afcb6085bfb8592d6",
+    "shared/MFColors.inc": "6f8b03f8d2265fd8521fd678946c1eeb322ba4e87603b2ba63b7259ff583f483"
+  },
+  "nativeCodeUnchangedInSourcePackage": true,
+  "baselineTestsPassed": 8,
+  "baselineRetiredEntries": 12,
+  "baselineNativeRegression": {
+    "projects": 3,
+    "dimensionChains": 96,
+    "trueAxisLabels": 24,
+    "mainLevelsConnected": 126,
+    "openingLevelsWithoutLeader": 86
+  },
+  "scope": "本机基线使用已核定几何完成三个项目的原生准备、构建、隔离加载与保存重开。仓库只包含源码和汇总；发布副本的相对路径适配另作代码测试，未在此检出目录重跑CAD，未宣称模型识别或整图八类验收全部通过。"
+}

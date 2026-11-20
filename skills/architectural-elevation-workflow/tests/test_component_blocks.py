@@ -21,6 +21,47 @@ class Geometry(unittest.TestCase):
         self.assertEqual(module_dimension(158.4),160);self.assertEqual(module_dimension(118.8),120)
 
 class Blocks(unittest.TestCase):
+    def test_saved_file_keeps_policy_layers_and_real_fraction(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as directory:
+            d=ezdxf.new('R2018');e=ComponentBlockExporter(d)
+            e.add('C1','column','south',(0,0),[((0,0),(73.5,0),'A-COLUMN')])
+            path=Path(directory)/'current-layers.dxf';d.saveas(path)
+            reopened=ezdxf.readfile(path)
+            self.assertEqual(list(reopened.modelspace().query('INSERT'))[0].dxf.layer,'J-LM-立面线脚1-0.18')
+            self.assertEqual(world_segments(reopened),[((0.0,0.0),(73.5,0.0),'J-LM-立面线脚1-0.18')])
+
+    def test_current_policy_layers_override_legacy_component_aliases(self):
+        from collections import Counter
+        cases=[('column','A-COLUMN','J-LM-立面线脚1-0.18',11),
+               ('column','J-LM-立面线脚1-0.18','J-LM-立面线脚1-0.18',11),
+               ('moulding','A-TRIM','J-LM-立面线脚1-0.18',11),
+               ('railing','A-RAIL','栏杆',47),('door','A-DOOR','A-立面门窗',133)]
+        for kind,old_layer,expected,color in cases:
+            with self.subTest(kind=kind,source=old_layer):
+                d=ezdxf.new('R2018');e=ComponentBlockExporter(d)
+                ref=e.add('ONE',kind,'south',(0,0),[((0,0),(73.5,0),old_layer)],source_id='SRC')
+                self.assertEqual(ref.dxf.layer,expected)
+                self.assertEqual(Counter(l for a,b,l in world_segments(d)),Counter({expected:1}))
+                self.assertEqual(d.layers.get(expected).dxf.color,color)
+                self.assertEqual(world_segments(d)[0][1],(73.5,0.0))
+
+    def test_current_window_frame_and_casing_remain_separate(self):
+        d=ezdxf.new('R2018');e=ComponentBlockExporter(d)
+        e.add('W1','window','south',(0,0),[((0,0),(10,0),'A-WINDOW'),((0,1),(10,1),'A-TRIM')])
+        refs=list(d.modelspace().query('INSERT'))
+        self.assertEqual({r.dxf.layer for r in refs},{'A-立面门窗','J-LM-立面线脚1-0.18'})
+        self.assertEqual(len(refs),2)
+
+    def test_opening_lines_have_the_confirmed_color_on_a_new_drawing(self):
+        d=ezdxf.new('R2018')
+        exporter=ComponentBlockExporter(d)
+        layer='A-立面门窗开启线'
+        exporter.add('W1','window','south',(0,0),[((0,0),(4,4),layer)])
+        self.assertIn(layer,d.layers)
+        self.assertEqual(d.layers.get(layer).color,252)
+        self.assertEqual(world_segments(d)[0][2],layer)
+
     def test_same_geometry_reuses_definition_and_changes_propagate(self):
         d=ezdxf.new('R2018');d.layers.new('A-WINDOW')
         e=ComponentBlockExporter(d)
@@ -53,6 +94,6 @@ class Blocks(unittest.TestCase):
         d=ezdxf.new('R2018');e=ComponentBlockExporter(d)
         lines=[((0,0),(10,0),'A-EAVE'),((10,0),(10,5),'A-EAVE'),((10,5),(0,5),'A-TRIM')]
         e.add('M1','moulding','S',(0,0),lines,{'height':5},'M')
-        self.assertEqual(Counter(l for a,b,l in world_segments(d)),Counter({'A-EAVE':2,'A-TRIM':1}))
+        self.assertEqual(Counter(l for a,b,l in world_segments(d)),Counter({'A-EAVE':2,'J-LM-立面线脚1-0.18':1}))
 
 if __name__=='__main__':unittest.main()

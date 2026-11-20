@@ -115,6 +115,15 @@
         "ByBlock",
         "ByLayer"
       ]
+    },
+    "moulding": "J-LM-立面线脚1-0.18",
+    "railing": "栏杆",
+    "steps": "A-STEP",
+    "layerACI": {
+      "J-LM-立面线脚1-0.18": 11,
+      "A-立面门窗": 133,
+      "A-立面门窗开启线": 252,
+      "栏杆": 47
     }
   },
   "roofFill": {

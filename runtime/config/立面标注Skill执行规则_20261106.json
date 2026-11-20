@@ -1,0 +1,714 @@
+{
+  "schema": "bce.elevation-annotation-skill-policy.v1",
+  "effectiveDate": "2026-11-15",
+  "scope": "建筑施工图立面标注及构件表达。标高和轴线共用规则按适用范围继承，屋面填充与构件图层仅立面。",
+  "authority": "用户确认的立面标注规则及 2026-11-13 刘府对话中的四项补充。",
+  "skill": {
+    "name": "architectural-annotation-rules",
+    "appliedReferences": [
+      "references/common.md",
+      "references/elevation.md"
+    ],
+    "inheritanceChecked": "references/section.md（仅读取确认立剖共用口径，不启用剖面功能）",
+    "excludedReference": "references/plan.md（不导入平面差异）",
+    "sourceHashes": {
+      "SKILL.md": "17c05dccc9fabec2d60ba2e411396589b76d43dd0376c8d427e12a0ec0d80870",
+      "references/common.md": "39acba8dda8c2eccb499a02238caf4cf47a767db5eebe1db812492a48a3c0e4b",
+      "references/elevation.md": "8d9eccaf38d38c7dec54f8e66857564ffcf66fb9b3835cdcc9c8e49591650519",
+      "references/section.md": "960f2c055c9552b2c287133036cfb01e8d528c40eee0f9d734deff561f687ba7",
+      "references/provenance.json": "e8f7f051cf91cd47c6484564458c4b1f14fc8f79c0867ac81422635c25e3ba91"
+    },
+    "sourcePathsPolicy": "本规则完整参数在当前文件；Skill来源相对其自身目录解析，作者机器绝对路径不作插件运行依赖"
+  },
+  "precedence": [
+    "当前用户同范围最新明确确认",
+    "本Skill的共用及立面规则",
+    "现有未冲突的立面图层、构件表达和几何工作流规则",
+    "有适用范围及来源的当前项目参数；历史测量/冻结工件不提升为默认"
+  ],
+  "units": {
+    "actualBuildingLength": "实际毫米，不随排布比例改变",
+    "layout": "paper_mm",
+    "modelDistanceFormula": "paperMM * scaleDenominator / mmPerDrawingUnit",
+    "elevation": "metres",
+    "elevationDecimals": 3,
+    "zeroDisplay": "±0.000",
+    "requiredProjectInputs": [
+      "drawingUnitMM",
+      "scaleDenominator",
+      "actualExteriorWallAxisPerSide",
+      "actualWallBottom",
+      "confirmedPlanAxesAndViewDirection",
+      "actualDatumAndControlHeights",
+      "referenceFontAndNativeStyles"
+    ]
+  },
+  "dimensions": {
+    "nativeClass": "TDbDimension2",
+    "wholeEditableChain": true,
+    "sideRows": 3,
+    "bottomRows": 2,
+    "bottomContents": [
+      "axisSegments",
+      "totalAxisDistance"
+    ],
+    "bottomThirdRow": false,
+    "roofTopHorizontalRows": 0,
+    "retainNecessaryInternalClearHeight": true,
+    "continuousSecondRows": [
+      "bottomHorizontal",
+      "bothSideVertical"
+    ],
+    "measurement": "actualSourceControlPointsAndVisibleOpenings",
+    "smallDecorationPolicy": "按构件作用暂不标细碎檐口线脚；不按数值删除合法主链段",
+    "sharedNodeEditingRequired": true
+  },
+  "sideSpacing": {
+    "datum": "actual_exterior_wall_axis",
+    "direction": "outward_in_view_local_horizontal_per_side",
+    "referenceScaleDenominator": 100,
+    "referenceDrawingUnitMM": 1,
+    "relations": [
+      {
+        "from": "wallAxis",
+        "to": "visibleExtensionStart",
+        "paperMM": 18
+      },
+      {
+        "from": "visibleExtensionStart",
+        "to": "thirdBaseline",
+        "paperMM": 6
+      },
+      {
+        "from": "thirdBaseline",
+        "to": "secondBaseline",
+        "paperMM": 8
+      },
+      {
+        "from": "secondBaseline",
+        "to": "firstOutermostBaseline",
+        "paperMM": 8
+      },
+      {
+        "from": "firstOutermostBaseline",
+        "to": "mainLevelTriangleTip",
+        "paperMM": 6
+      }
+    ],
+    "outwardOffsetPaperMM": {
+      "visibleExtensionStart": 18,
+      "thirdBaseline": 24,
+      "secondBaseline": 32,
+      "firstOutermostBaseline": 40,
+      "mainLevelTriangleTip": 46
+    },
+    "offsetsAt1To100MM": [
+      1800,
+      2400,
+      3200,
+      4000,
+      4600
+    ]
+  },
+  "bottomSpacing": {
+    "datum": "actual_wall_bottom",
+    "direction": "downward_in_view_local_vertical",
+    "referenceScaleDenominator": 100,
+    "referenceDrawingUnitMM": 1,
+    "relations": [
+      {
+        "from": "wallBottom",
+        "to": "visibleExtensionStart",
+        "paperMM": 8
+      },
+      {
+        "from": "visibleExtensionStart",
+        "to": "secondBaseline",
+        "paperMM": 16
+      },
+      {
+        "from": "secondBaseline",
+        "to": "firstOutermostBaseline",
+        "paperMM": 8
+      },
+      {
+        "from": "firstOutermostBaseline",
+        "to": "axisCircleCenter",
+        "paperMM": 8
+      }
+    ],
+    "outwardOffsetPaperMM": {
+      "visibleExtensionStart": 8,
+      "secondBaseline": 24,
+      "firstOutermostBaseline": 32,
+      "axisCircleCenter": 40
+    },
+    "offsetsAt1To100MM": [
+      800,
+      2400,
+      3200,
+      4000
+    ],
+    "axisCircleMeasurementTarget": "center",
+    "nearEdgeRuleApplies": false
+  },
+  "axisLabels": {
+    "nativeClass": "TDbAxisLabelSet",
+    "axisSource": "confirmed_current_project_plan_axes_projected_in_actual_view_order",
+    "radiusAt1To100MM": 400,
+    "radiusPaperMM": 4,
+    "textUpright": true,
+    "leaderCrossings": "both_dimension_rows_at_actual_axis_station",
+    "offsetLabelLeader": "native_axis_label_plus_editable_independent_extension_allowed"
+  },
+  "mainLevels": {
+    "nativeClass": "TDbSymbElevation",
+    "defaultSides": [
+      "left",
+      "right"
+    ],
+    "exception": "current_project_explicit_single_side_only_with_source",
+    "requiredHeightSource": "actual_current_project_ground_floors_eaves_ridges",
+    "matrixKey": [
+      "view",
+      "side",
+      "controlHeightMeaning",
+      "datum"
+    ],
+    "uniqueActualObjectPerExpectedRow": true,
+    "tipToOutermostSideDimensionPaperMM": 6,
+    "baseline": "native_to_second_side_vertical_dimension_baseline_at_same_y",
+    "normal": {
+      "triangle": "hollow_downward",
+      "text": "upper_left"
+    },
+    "neighborLowerOutdoor": {
+      "triangle": "hollow_upward",
+      "text": "lower_left",
+      "alignTipXWithMainZero": true
+    },
+    "rightSide": "verify_upright_legibility_sign_and_posture_after_layout_or_mirror",
+    "noFixedHeightListOrCount": true,
+    "baselineConnection": {
+      "target": "secondSideVerticalDimension",
+      "sameHeight": true,
+      "requireActualDimensionStation": true,
+      "maintainTipOutwardFromFirstPaperMM": 6,
+      "referenceTipToConnectionPaperMM": 14,
+      "preserveMeasuredElevation": true
+    },
+    "closePairLayout": {
+      "trigger": "actual_symbol_or_text_clearance_insufficient",
+      "lowerMarkTriangle": "hollow_upward",
+      "lowerMarkText": "below_baseline_upright",
+      "preserve": [
+        "tip",
+        "value",
+        "baselineEndpoint",
+        "nativeType"
+      ],
+      "fixedGapThresholdMM": null
+    }
+  },
+  "localLevels": {
+    "anchor": "actual_component_control_point",
+    "placement": "nearby_avoidance",
+    "preserve": [
+      "apex",
+      "actualHeight",
+      "actualValue"
+    ],
+    "baselineLength": "actual_need_not_fixed_700",
+    "deduplicationScope": "same_local_expression_only_not_opposite_main_column"
+  },
+  "text": {
+    "internalEffectiveACI": 7,
+    "referenceFontPolicy": "read_actual_font_and_style_resources",
+    "nominalHeightAndGlyphHeightAreDistinct": true,
+    "referenceExampleOnly": {
+      "font": "SIMPLEX",
+      "bigfont": "GBCBIG",
+      "glyphHeightModelMMAt1To100": 297.5,
+      "widthFactor": 0.7058823529411765,
+      "codeDefaultPaperGlyphHeight": 2.975,
+      "universalApprovedTextHeight": false
+    },
+    "planFYHZAndDoorNumber3mmNotGeneralized": true
+  },
+  "layers": {
+    "AXIS": {
+      "aci": 3,
+      "uses": [
+        "firstDimension",
+        "secondDimension",
+        "axisLabel"
+      ]
+    },
+    "PUB_DIM": {
+      "aci": 25,
+      "uses": [
+        "thirdDimension",
+        "localDimension"
+      ]
+    },
+    "DIM_ELEV": {
+      "aci": 3,
+      "uses": [
+        "nativeElevation",
+        "nativeBaseline"
+      ]
+    },
+    "DOTE": {
+      "aci": 24,
+      "uses": [
+        "independentAxis",
+        "floorControlLine"
+      ],
+      "entityLinetype": "DOTE"
+    },
+    "DIM_SYMB": {
+      "aci": 3,
+      "uses": [
+        "nativeDrawingName"
+      ]
+    },
+    "DIM_LEAD": {
+      "aci": 3,
+      "uses": [
+        "nativeLeaderNoteWhenApplicable"
+      ]
+    },
+    "DIM_IDEN": {
+      "aci": 1,
+      "uses": [
+        "nativeIndexWhenApplicable"
+      ]
+    },
+    "PUB_TEXT": {
+      "aci": 7,
+      "uses": [
+        "standaloneElevationNoteOrScheduleTextWhenApplicable"
+      ],
+      "scope": "elevationOnly",
+      "createWhenUsed": true
+    },
+    "PUB_TAB": {
+      "aci": 3,
+      "uses": [
+        "elevationScheduleGridWhenApplicable"
+      ],
+      "scope": "elevationOnly",
+      "createWhenUsed": true
+    },
+    "A-TEXT-DESC": {
+      "aci": 4,
+      "uses": [
+        "elevationMaterialScheduleOrNoteHeadingWhenApplicable"
+      ],
+      "scope": "elevationOnly",
+      "createWhenUsed": true
+    }
+  },
+  "commonLayerProperties": {
+    "linetype": "Continuous",
+    "lineWeight": "Default",
+    "off": false,
+    "frozen": false,
+    "plottable": true
+  },
+  "drawingName": {
+    "nativeClass": "TDbDrawingName",
+    "directionNameAndScale": "current_project"
+  },
+  "verification": {
+    "dimension": [
+      "actual_stations",
+      "actual_values",
+      "continuous_chain",
+      "segment_sum",
+      "whole_chain_and_shared_node_editability"
+    ],
+    "axis": [
+      "native_type",
+      "number",
+      "circle_position",
+      "side_visibility",
+      "leader_through_correct_stations",
+      "horizontal_roof_control_coverage",
+      "projected_exterior_wall_axis_and_bottom_station_alignment"
+    ],
+    "level": [
+      "native_type",
+      "project_datum_value",
+      "apex",
+      "baseline",
+      "posture",
+      "upright_text",
+      "expected_actual_coverage",
+      "native_baseline_meets_second_vertical_dimension_at_same_height",
+      "lower_mark_flipped_when_actual_clearance_requires"
+    ],
+    "text": [
+      "actual_font",
+      "nominal_height",
+      "glyph_height",
+      "scale",
+      "internal_effective_color",
+      "orientation",
+      "avoidance"
+    ],
+    "drawingAfterModification": [
+      "independent_save_reopen",
+      "native_object_data_checks",
+      "actual_final_view_check_both_ends",
+      "all_annotation_bounds_and_neighbor_view_windows"
+    ],
+    "missingExpectedMainRowsAllowed": 0,
+    "unchangedOriginalCountIsNotCoverage": true,
+    "component": [
+      "effective_column_and_casing_layer",
+      "frame_sash_and_mullion_layer",
+      "separately_selectable_window_and_casing_with_shared_opening_anchor",
+      "source_inventory_to_visible_segments_and_nested_effective_layer_color_after_reopen"
+    ],
+    "roofFill": [
+      "pattern",
+      "boundaryCoverage",
+      "islands",
+      "noLeakage",
+      "noDuplicateFill",
+      "visualContrast"
+    ]
+  },
+  "pendingReferenceParameters": [
+    "full_paper_text_heights_by_category",
+    "arrow_or_oblique_tick_parameters",
+    "special_and_slanted_curved_axes",
+    "axis_merge_tolerance",
+    "full_CTB_STB_print_lineweights"
+  ],
+  "superseded": [
+    {
+      "old": "实际墙外边1500／可见起笔至第三道1100",
+      "current": "实际外墙轴线1800／可见起笔至第三道600"
+    },
+    {
+      "old": "PUB DIM或A-PUB_DIM新输出",
+      "current": "PUB_DIM25；旧名仅识别"
+    },
+    {
+      "old": "A-DOTE1新输出",
+      "current": "DOTE24；旧名仅历史/识别"
+    },
+    {
+      "old": "通用单侧主标高",
+      "current": "默认双侧，当前明确项目例外另记"
+    },
+    {
+      "old": "底部轴圈近边800",
+      "current": "立剖面底部量圆心800，平面近边规则独立"
+    },
+    {
+      "old": "主屋面和假坡一律留白",
+      "current": "默认可见坡面填弯瓦屋面；明确要求无填充的项目选 none。"
+    }
+  ],
+  "requirements": [
+    {
+      "id": "EA01",
+      "topic": "范围与优先级",
+      "requirement": "仅本插件立面标注；当前用户明确确认优先，同范围采用本Skill共用及立面规则。剖面继承共用标注不代表本插件启用剖面功能；平面与几何造型规则不连带改写。",
+      "source": "common.md;section.md"
+    },
+    {
+      "id": "EA02",
+      "topic": "项目事实",
+      "requirement": "读取当前单位、比例、实际外墙轴线、墙底、平面轴网、观察方向、零点、真实控制高度与字体资源；案例坐标/句柄/层高/数量不作为通用常数。",
+      "source": "common.md;elevation.md"
+    },
+    {
+      "id": "EA03",
+      "topic": "尺度换算",
+      "requirement": "建筑实际长度不随排版比例改变；布局采用纸面毫米，模型距离=纸面毫米×比例分母÷每绘图单位对应毫米数。标高数值以米表达。",
+      "source": "common.md"
+    },
+    {
+      "id": "EA04",
+      "topic": "尺寸内容",
+      "requirement": "底部仅轴间分段及总轴距两道，左右侧三道竖向主尺寸；底部第三道、同类局部上窗偏移链及屋顶上方两道水平尺寸不恢复，必要建筑内部净高保留。",
+      "source": "elevation.md"
+    },
+    {
+      "id": "EA05",
+      "topic": "真实整体与连续",
+      "requirement": "使用真正整体TDbDimension2；第二道底水平及侧竖向均连续，实际测点/测值/共享节点可编辑，分段和总量闭合。",
+      "source": "common.md;elevation.md"
+    },
+    {
+      "id": "EA06",
+      "topic": "洞口及细碎尺寸",
+      "requirement": "洞口按当前视向真实可见开口与控制点标注，不把相切或侧投窗框当正向洞口；檐口线脚120/250/150/180/480等细碎装饰尺寸暂不标，按构件用途识别，不按数值全图删除合法主链段。",
+      "source": "elevation.md"
+    },
+    {
+      "id": "EA07",
+      "topic": "侧向五段",
+      "requirement": "外墙轴线基准，向本侧建筑外侧1800/600/800/800/600；累计可见起笔1800、第三道2400、第二道3200、最外第一道4000、主标高尖4600（1:100模型毫米）。",
+      "source": "elevation.md"
+    },
+    {
+      "id": "EA08",
+      "topic": "底部四段",
+      "requirement": "真实墙底至可见起笔800、起笔至第二道1600、第二道至第一道800、第一道至轴圈圆心800；累计800/2400/3200/4000（1:100模型毫米）。",
+      "source": "elevation.md"
+    },
+    {
+      "id": "EA09",
+      "topic": "量点定义",
+      "requirement": "分别核对实际轴线、尺寸定义点、DIMEXO后的可见起笔端、真实基线、尾段和三角尖。底部量轴圈圆心，平面近边口径不套入立面。",
+      "source": "common.md;elevation.md"
+    },
+    {
+      "id": "EA10",
+      "topic": "轴网来源",
+      "requirement": "配套平面确认的同一逻辑轴按观察方向投影排序，不从立面外观猜轴或复制参考编号；转向不重建无关编号。",
+      "source": "elevation.md"
+    },
+    {
+      "id": "EA11",
+      "topic": "轴号本体及引线",
+      "requirement": "真正TDbAxisLabelSet，当前确认样式1:100圆半径400、文字正向；引线在两道尺寸处通过真实测站。偏移轴圈可用真实本体及独立可编辑折线，不让长斜线在错误轴位穿过尺寸行。",
+      "source": "elevation.md"
+    },
+    {
+      "id": "EA12",
+      "topic": "控制线",
+      "requirement": "DOTE／24，层 Continuous、对象 DOTE。横向控制线按实际地坪、楼层、檐口、屋脊及适用的屋面高度表达。竖向轴线按平面确认的左右外墙定位轴投影，与底部轴号和实际测站对齐。",
+      "source": "elevation.md"
+    },
+    {
+      "id": "EA13",
+      "topic": "主标高双侧覆盖",
+      "requirement": "按本项目真实室内外地坪、楼层、檐口、屋脊等建立立面×侧别×控制高度应有/实有清单，默认双侧；当前明确单侧例外逐项记录。",
+      "source": "elevation.md EE01"
+    },
+    {
+      "id": "EA14",
+      "topic": "标高真实值",
+      "requirement": "真正TDbSymbElevation，米制三位小数，零值±0.000；基于实际零点和构件测点，不仅改可见数字或复制其他项目高度。",
+      "source": "elevation.md EE02"
+    },
+    {
+      "id": "EA15",
+      "topic": "标高姿态",
+      "requirement": "常规空心倒三角、数字在上。实测符号或文字净距不足时，下方标高用空心向上三角、文字在基线下方，保持尖点、真实值、基线接点和原生类型。近邻较低室外标高沿用下翻。右侧文字正向。",
+      "source": "elevation.md EE03"
+    },
+    {
+      "id": "EA16",
+      "topic": "主标高定位与基线",
+      "requirement": "主尖点距本侧最外第一道竖向尺寸线向外600（1:100模型毫米）。原生基线向内接本侧第二道竖向尺寸基线的同高测站。主尖点到接点在标准排布下为1400。",
+      "source": "elevation.md EE04"
+    },
+    {
+      "id": "EA17",
+      "topic": "局部标高及去重",
+      "requirement": "屋面/门廊/平台锚真实构件测点就近避让；允许的文字和上横线调整保持尖点/高度/数值。基线长度按实际需要，不固定700；局部同表达去重不删除另一侧应有主标高。",
+      "source": "elevation.md EE05"
+    },
+    {
+      "id": "EA18",
+      "topic": "图名",
+      "requirement": "真正TDbDrawingName，DIM_SYMB3、内部字7；当前项目方向/名称/比例，与轴圈冲突采用整体排布调整。",
+      "source": "elevation.md"
+    },
+    {
+      "id": "EA19",
+      "topic": "有效文字外观",
+      "requirement": "尺寸/轴号/标高/图名内部有效字色7，与真实对象保持编辑关系；外根归3色层不把内部字全改成层色。尺寸/标高使用参考真实字体，名义字高/实际字形高/比例分别核对。",
+      "source": "elevation.md"
+    },
+    {
+      "id": "EA20",
+      "topic": "参考字体边界",
+      "requirement": "SIMPLEX+GBCBIG、模型字形高297.5及宽0.7058823529411765属于D8参考原型；2.975纸面代码字段不等于批准所有文字字高。平面FY_HZ及门窗号纸面3.0不自动套立面全部文字。",
+      "source": "common.md;elevation.md"
+    },
+    {
+      "id": "EA21",
+      "topic": "层色及线宽",
+      "requirement": "立面标注按AXIS3/PUB_DIM25/DIM_ELEV3/DOTE24/DIM_SYMB3/DIM_LEAD3/DIM_IDEN1。立面说明及附表按需用PUB_TEXT7/PUB_TAB3/A-TEXT-DESC4。层线型Continuous，线宽Default。控制线对象指定DOTE，索引辅助线按实际用途核对__DASH。读取块内与天正派生最终外观，实际打印线宽按CTB/STB及出图设置核验。",
+      "source": "elevation.md"
+    },
+    {
+      "id": "EA22",
+      "topic": "避让与排版",
+      "requirement": "通过真实文字夹点、基线或整体排布避让，不改真实测值/字体伪装通过；核实际字框及窗梃/烟囱/基线，补齐后重算全部标注外包及出图窗口。",
+      "source": "elevation.md"
+    },
+    {
+      "id": "EA23",
+      "topic": "保存重开及覆盖验收",
+      "requirement": "修改DWG后保存重开，逐立面逐侧逐控制高度唯一匹配实际对象并看两端；列缺失/重复/错值/错位/反字/裁切。原对象和总数保持、CAD审计或API成功不替代完整性及最终图面。",
+      "source": "common.md;elevation.md"
+    },
+    {
+      "id": "EA24",
+      "topic": "状态与待补项",
+      "requirement": "分别记录规则、项目DWG、插件源码及正式安装包落实状态。未指定完整字高/箭头/斜短线/特殊斜弧轴/轴线归并容差/完整打印线宽读适用参考，未核定列待核，不凭案例常数补齐。",
+      "source": "common.md"
+    },
+    {
+      "id": "EA25",
+      "topic": "柱式及门窗套归层",
+      "source": "2026-11-13 用户立面补充",
+      "requirement": "装饰柱式、窗套、门套归 J-LM-立面线脚1-0.18（ACI11）。混合块按成员有效层核验，框扇及分格归 A-立面门窗，开启线使用专层。 窗体与可见窗套分别成可单独选取的模型空间块，共用洞口基点及实例关联。 按完整实例路径、原边和邻接面逐段确定用途。混合多段线在真实交接点拆分。重开后从源构件清单反查块内成员有效层色及遮挡断口。"
+    },
+    {
+      "id": "EA26",
+      "topic": "主屋面及假坡瓦纹填充",
+      "source": "2026-11-13 用户立面补充",
+      "requirement": "主屋面和假坡的最终可见坡面默认填弯瓦屋面，按屋脊、斜脊、檐口、交接和遮挡边裁切。采用可编辑图案填充，置于看线和标注之下。项目明确无填充时按项目口径。"
+    }
+  ],
+  "implementationStatus": {
+    "rulePolicyUpdated": true,
+    "dwgModified": false,
+    "productSourceModified": false,
+    "arxBuilt": false,
+    "installerModified": false,
+    "installed": false,
+    "runtimeAutoLoadsThisJSON": false,
+    "scope": "个人技能入口与规则读取检查；正式 CAD 插件运行时集成另行验证。",
+    "sourceReadOnlyObservations": [
+      {
+        "file": "立面插件/src/RuleModel.h",
+        "observation": "ReferenceFamily保留2.975/0.7058823529411765原型字段，laneOffsets由family传入；LevelMark未显式存侧别/主局部应有矩阵",
+        "status": "未修改；应按当前规则另行接入/核验"
+      },
+      {
+        "file": "立面插件/src/AnnotationRules.cpp",
+        "observation": "单位/比例及当前datum计算已有；generic addLevels逐语义点生成，不等于现行双侧主标高唯一覆盖；opening/localMoulding等通用链分支不自动代表取消链已排除",
+        "status": "仅静态发现接入差异，未运行或修源码"
+      },
+      {
+        "file": "历史项目冻结实现/交付",
+        "observation": "按其原时点验收保留，不因本次规则更新回写或追认符合新间距",
+        "status": "保持历史事实"
+      }
+    ],
+    "skillRuleReader": "skill://architectural-elevation-workflow/scripts/read_elevation_rules.py",
+    "skillRuleReaderVerified": true,
+    "hatchResourceProbe": "AutoCAD 2020 临时 DWG 保存重开，HATCH、六组图案线、内外环、比例、角度、图层通过"
+  },
+  "layerRevision": {
+    "date": "2026-11-13",
+    "source": "新块.dwg",
+    "sourceSHA256": "85ac2002205c1d273b8f304172d3d383ebde72fec5b7b520ece63a757cdffd07",
+    "fullLayerRules": "立面图层规则_20261105.json",
+    "scope": "立面说明、附表用层及源图识别。平面和剖面独有规则沿用原口径。"
+  },
+  "controlLines": {
+    "layer": "DOTE",
+    "aci": 24,
+    "layerLinetype": "Continuous",
+    "entityLinetype": "DOTE",
+    "horizontal": {
+      "source": "verified_actual_control_elevations",
+      "requiredRolesWhenPresent": [
+        "ground",
+        "floor",
+        "eaves",
+        "roofRidge"
+      ],
+      "additionalRoles": "verified_relevant_roof_controls",
+      "coverage": "view_specific_role_check",
+      "distinguishFromRoofDimensionRows": true
+    },
+    "vertical": {
+      "source": "confirmed_plan_exterior_wall_axes",
+      "required": "each_view_left_and_right_effective_exterior_wall_axis",
+      "alignedTo": [
+        "bottomAxisNumber",
+        "bottomDimensionStation"
+      ],
+      "extent": "from_axis_leader_connection_through_actual_wall_to_verified_top_control",
+      "unknownAxis": "record_pending_with_source_location"
+    }
+  },
+  "componentLayers": {
+    "ornamentalColumn": "J-LM-立面线脚1-0.18",
+    "windowCasing": "J-LM-立面线脚1-0.18",
+    "doorCasing": "J-LM-立面线脚1-0.18",
+    "frameSashAndMullions": "A-立面门窗",
+    "openingLines": "A-立面门窗开启线",
+    "checkNestedEffectiveLayers": true,
+    "windowCasingBlock": {
+      "mode": "separate_modelspace_insert",
+      "anchor": "same_opening_datum_as_frame",
+      "association": "opening_instance_id",
+      "skipWhenNotVisible": true
+    },
+    "segmentLayerAssignment": {
+      "sourceOwnership": [
+        "fullInstancePath",
+        "sourceEdge",
+        "adjacentFaces",
+        "componentRole"
+      ],
+      "retainOwnershipThrough": [
+        "projection",
+        "occlusionClipping",
+        "deduplication",
+        "blockAssembly"
+      ],
+      "unknownRole": "flagForReview",
+      "mixedPolyline": "splitAtActualRoleBoundaryPreservingGeometry",
+      "sharedDefinitions": "separateOnlyReferencesRequiringDifferentMemberLayers",
+      "reopenCheckFrom": "verifiedSourceComponentInventory",
+      "reopenCheckEffectiveProperties": [
+        "layer",
+        "color",
+        "layer0Inheritance",
+        "ByBlock",
+        "ByLayer"
+      ]
+    }
+  },
+  "roofFill": {
+    "scope": "elevationOnly",
+    "defaultMode": "curvedRoofTile",
+    "explicitProjectOverride": "none",
+    "surfaceRoles": [
+      "mainSlopedRoof",
+      "decorativeSlopedRoof"
+    ],
+    "boundary": "final_visible_projected_surface_loops_after_occlusion",
+    "exclude": [
+      "flatRoof",
+      "flatCanopy",
+      "fascia",
+      "corniceMoulding",
+      "walls",
+      "openings",
+      "occludingObjects"
+    ],
+    "nativeClass": "AcDbHatch",
+    "pattern": "弯瓦屋面",
+    "layer": "立面填充",
+    "aci": 252,
+    "colorMethod": "ByLayer",
+    "patternResource": "skill://architectural-elevation-workflow/assets/弯瓦屋面.pattern.json",
+    "sampleResource": "skill://architectural-elevation-workflow/assets/弯瓦屋面_用户图例.png",
+    "phase": "shared_per_view_for_matching_pattern_and_scale",
+    "drawOrder": "behind_visible_outlines_and_annotations",
+    "reopenChecks": [
+      "pattern",
+      "boundaryCoverage",
+      "islands",
+      "noLeakage",
+      "noDuplicateFill",
+      "visualContrast"
+    ]
+  }
+}

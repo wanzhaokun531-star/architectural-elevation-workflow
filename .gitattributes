@@ -1,0 +1,7 @@
+# The runtime manifest hashes original bytes; cloning must preserve them.
+* -text whitespace=trailing-space,space-before-tab,cr-at-eol
+# Preserve validated native snapshots, including their existing whitespace.
+runtime/native/** -whitespace
+runtime/native-axis/** -whitespace
+runtime/native-dim/** -whitespace
+runtime/shared/** -whitespace

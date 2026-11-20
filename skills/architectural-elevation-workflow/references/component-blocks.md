@@ -28,7 +28,7 @@
 - `module_dimension(value, step=5)`：仅用于已授权的新增装饰参数。不会自动应用到源坐标。
 - `clean_segments(lines, gap_tolerance=.001)`：每条线为`(start_xy,end_xy,layer)`；保留图层，清理共线重叠。
 - `chain_paths(lines)`：连接连续轮廓，不穿越分支或真实缺口。
-- `ComponentBlockExporter(doc)`：文档应先设置正确单位、图层及文字样式。
+- `ComponentBlockExporter(doc)`：文档应先设置正确单位、图层及文字样式。工具从现行立面补充执行参数读取用途层与已确认层色；柱式、线脚和托件归线脚层，栏杆归栏杆层。只归一当前类型已知的旧层别名，混合用途显式层仍须按原边/邻接面识别，不能只凭块kind强改所有成员。
 - `exporter.add(instance_id, kind, view, origin, lines, parameters, source_id)`：`origin`和线段都在同一已排版的二维世界坐标；返回主模型空间 `INSERT`。窗套随同调用以独立模型空间 `INSERT` 生成，可在 instances 中按 opening_instance_id 对应。调用前按原实例分离框扇和套边线。
 - `kind`可用`window/door/column/moulding/railing/steps/corbel`。常用参数有`width/height/paired`等，位置和楼层等身份信息不参与同型块共享。
 - `exporter.instances/definitions/stats/expected_segments`提供块索引、复用及几何核对依据。

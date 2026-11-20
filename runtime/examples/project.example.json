@@ -1,0 +1,35 @@
+{
+  "name": "<项目名称>",
+  "inputDirectory": "<实际输入目录>",
+  "inputs": {
+    "placement.tsv": "<文件SHA256>",
+    "local-levels.json": "<文件SHA256>",
+    "geometry.json": "<文件SHA256>",
+    "openings.json": "<文件SHA256>",
+    "export-audit.json": "<文件SHA256>"
+  },
+  "sources": [{"path": "<原资料完整路径>", "sha256": "<文件SHA256>"}],
+  "geometryDwg": "<核定最终几何DWG完整路径>",
+  "geometryDwgSHA256": "<文件SHA256>",
+  "geometryRoots": 0,
+  "planDwg": "<同版原生平面DWG完整路径>",
+  "planDwgSHA256": "<文件SHA256>",
+  "donors": {
+    "levels.dwg": {"path": "<已验证标高原型DWG>", "sha256": "<文件SHA256>"},
+    "titles.dwg": {"path": "<已验证图名原型DWG>", "sha256": "<文件SHA256>"},
+    "dimension-donor.dwg": {"path": "<已验证尺寸原型DWG>", "sha256": "<文件SHA256>"},
+    "axis-donor.dwg": {"path": "<已验证轴号原型DWG>", "sha256": "<文件SHA256>"}
+  },
+  "plotStyleName": "Project_Elevation.ctb",
+  "plotStyleSource": "<CTB完整路径>",
+  "plotStyleSHA256": "<文件SHA256>",
+  "installedPlotStyle": "<实际已安装同版CTB完整路径>",
+  "trustedModuleDirectory": "<实际天正受信任模块目录>",
+  "isolatedHost": "<runtime目录>/host/启动隔离桌面宿主.ps1",
+  "acadExecutable": "<AutoCAD2020的acad.exe完整路径>",
+  "cadProfile": "<已验证天正宿主配置名>",
+  "template": "<实际DWT模板完整路径>",
+  "roofSelection": {"status": "pending", "basis": "<本项目屋面采用依据>"},
+  "datum": {"status": "pending", "basis": "<本项目零点依据>"},
+  "pending": ["<实际待核项；核定后更新并保留依据>"]
+}

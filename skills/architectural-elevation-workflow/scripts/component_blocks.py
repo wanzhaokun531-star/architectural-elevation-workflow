@@ -8,6 +8,7 @@ from collections import defaultdict,Counter
 from decimal import Decimal,ROUND_HALF_UP
 from math import atan2,cos,sin,hypot,pi
 import hashlib,json,re
+from pathlib import Path
 
 def module_dimension(value,step=5):
     if step<=0:raise ValueError('Module must be positive')
@@ -82,18 +83,23 @@ def add_paths(layout,paths,layer_override=None):
         if len(p['points'])==2 and not p['closed']:layout.add_line(*p['points'],dxfattribs=attrs)
         else:layout.add_lwpolyline(p['points'],close=p['closed'],dxfattribs=attrs)
 
-WINDOW_FRAME_LAYER='A-立面门窗'
-WINDOW_CASING_LAYER='J-LM-立面线脚1-0.18'
+def current_component_layers():
+    policy_path=Path(__file__).resolve().parents[1]/'references/立面补充执行参数.json'
+    policy=json.loads(policy_path.read_text(encoding='utf-8-sig'))['componentLayers']
+    return {'window':policy['frameSashAndMullions'],'door':policy['frameSashAndMullions'],
+            'column':policy['ornamentalColumn'],'moulding':policy['moulding'],
+            'railing':policy['railing'],'steps':policy['steps'],
+            'window_trim':policy['windowCasing'],'column_detail':policy['ornamentalColumn'],
+            'corbel':policy['moulding']}
 
-PRIMARY={'window':WINDOW_FRAME_LAYER,'door':'A-DOOR','column':'A-COLUMN','moulding':'A-TRIM','railing':'A-RAIL','steps':'A-STEP','window_trim':WINDOW_CASING_LAYER,'column_detail':'A-DETAIL','corbel':'A-DETAIL'}
+PRIMARY=current_component_layers()
+WINDOW_FRAME_LAYER=PRIMARY['window']
+WINDOW_CASING_LAYER=PRIMARY['window_trim']
+
 PREFIX={'window':'WIN','door':'DOOR','column':'COL','moulding':'MOULD','railing':'RAIL','steps':'STEP','window_trim':'WTRIM','column_detail':'CRELIEF','corbel':'CORBEL'}
 
 def inheritance_layer(kind,lines):
-    if kind=='window_trim':return lines[0][2]
-    if kind!='moulding':return PRIMARY[kind]
-    counts=Counter(l for a,b,l in lines);maximum=max(counts.values())
-    choices=sorted(l for l,n in counts.items() if n==maximum)
-    return PRIMARY[kind] if PRIMARY[kind] in choices else choices[0]
+    return PRIMARY[kind]
 
 class ComponentBlockExporter:
     def __init__(self,doc):
@@ -102,6 +108,11 @@ class ComponentBlockExporter:
             if app not in doc.appids:doc.appids.new(app)
         for layer in PRIMARY.values():
             if layer not in doc.layers:doc.layers.new(layer)
+        colors=json.loads((Path(__file__).resolve().parents[1]/'references/立面补充执行参数.json').read_text(encoding='utf-8-sig'))['componentLayers']['layerACI']
+        for layer,color in colors.items():
+            if layer not in doc.layers:
+                doc.layers.new(layer)
+            doc.layers.get(layer).color=color
 
     def _definition(self,kind,lines,parameters):
         canonical=sorted((l,*sorted((point(a),point(b)))) for a,b,l in lines)
@@ -133,6 +144,17 @@ class ComponentBlockExporter:
         return name
 
     def add(self,instance_id,kind,view,origin,lines,parameters=None,source_id=''):
+        # Normalize only known legacy aliases for this component role. Keep
+        # explicit mixed-purpose layers; labels alone cannot classify members.
+        aliases={'window':{'A-WINDOW':PRIMARY['window']},
+                 'door':{'A-DOOR':PRIMARY['door'],'A-TRIM':PRIMARY['window_trim']},
+                 'column':{'A-COLUMN':PRIMARY['column'],'A-DETAIL':PRIMARY['column_detail']},
+                 'moulding':{'A-TRIM':PRIMARY['moulding']},
+                 'railing':{'A-RAIL':PRIMARY['railing']},
+                 'window_trim':{'A-TRIM':PRIMARY['window_trim']},
+                 'column_detail':{'A-DETAIL':PRIMARY['column_detail']},
+                 'corbel':{'A-DETAIL':PRIMARY['corbel']}}.get(kind,{})
+        lines=[(a,b,aliases.get(layer,layer)) for a,b,layer in lines]
         if kind == 'window':
             frame, casing = [], []
             casing_layers = {'A-TRIM', PRIMARY['window_trim'], WINDOW_CASING_LAYER}
