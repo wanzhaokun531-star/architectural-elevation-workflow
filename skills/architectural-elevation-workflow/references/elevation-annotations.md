@@ -2,7 +2,7 @@
 
 适用于已有方案立面、去标注立面 DWG 的深化，以及既有施工图立面的复核和标注修订。从平面和 SKP 或效果图新生成施工图立面时，在几何核定及回核后执行本专项。门窗标识和局部标高执行[强制性通用规则](window-symbols-and-local-levels.md)，纳入本专项的测点清单、生成及保存重开验收。
 
-施工图标注的道数、量点、距离、比例换算、天正类型、图层、字体及有效字色取自「建筑施工图标注规则」的 [共用核验与规则差异](../../architectural-annotation-rules/references/common.md) 和 [立面共用标注规则](../../architectural-annotation-rules/references/elevation.md)。本专项规定如何从项目图纸取证、排布及验收。当前项目有明确特例时记录依据和适用范围。
+施工图标注的道数、量点、距离、比例换算、天正类型、图层、字体及有效字色取自「建筑施工图标注规则」的 [共用核验与规则差异](annotation-rules/common.md) 和 [立面共用标注规则](annotation-rules/elevation.md)。本专项规定如何从项目图纸取证、排布及验收。当前项目有明确特例时记录依据和适用范围。
 
 ## 已有立面 DWG 深化
 

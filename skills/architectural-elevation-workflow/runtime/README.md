@@ -1,6 +1,12 @@
 # 共用原生执行代码
 
-本目录统一处理已核定几何后的天正标注准备、编译、隔离后台加载、保存重开、版本核验及正式DWG复制。几何来源识别及全图八类专业检查按技能执行。C++源码与本机验证基线相同；Python入口改用同仓库相对路径，可自定义技能及政策位置。
+本目录位于 `architectural-elevation-workflow` 技能内部，统一处理已核定几何后的天正标注准备、编译、隔离后台加载、保存重开、版本核验及正式DWG复制。几何来源识别及全图八类专业检查按技能执行。C++源码与本机验证基线相同，入口及规则从同一个技能文件夹解析。
+
+## 一次安装
+
+将整个 `architectural-elevation-workflow` 文件夹放到 `%USERPROFILE%\.codex\skills\`。文件夹内须同时有 `SKILL.md`、`references/`、`assets/`、`scripts/` 和 `runtime/`。安装包或GitHub都以这一个文件夹为更新单位，无需分别安装外置运行目录及标注技能。
+
+整体移动文件夹不会改变资源相对关系。旧 `ELEVATION_RUNTIME_ROOT`、`ELEVATION_SKILL_ROOT`、`ELEVATION_POLICY_PATH` 环境变量不再切换本包的代码或规则，避免更新后混用旧版本。旧分体安装中的项目配置需要迁入包内 `runtime/projects/`，按实际路径核对 `isolatedHost`、输入及资源，再重新准备会话；不会自动复用旧运行目录。
 
 ## 目录和环境
 
@@ -16,11 +22,11 @@
 
 ## 先验证源码包
 
-从仓库根目录运行，无需启动CAD：
+从 `architectural-elevation-workflow` 技能目录运行，无需启动CAD：
 
 ```powershell
 python -B -X utf8 -m unittest discover -s runtime/tests -v
-python -B -X utf8 skills/architectural-elevation-workflow/scripts/run_elevation.py inspect
+python -B -X utf8 scripts/run_elevation.py inspect
 ```
 
 私有三个项目输入不随仓库提供，对应数据测试明确跳过；公开合成数据覆盖尺寸测站、轴圈与引线端点、控制线及门窗局部标高映射。`current.json`绑定公开代码与规则，空项目列表是正常初始状态。
@@ -39,7 +45,7 @@ python -B -X utf8 runtime/elevation_runtime.py run --session "<会话目录>"
 python -B -X utf8 runtime/elevation_runtime.py verify --session "<会话目录>"
 ```
 
-可通过`ELEVATION_SKILL_ROOT`和`ELEVATION_POLICY_PATH`自定义技能及规则位置，变更后维护对应版本清单。输入变化时重新读取和核定来源，重新准备会话。未知配置、旧版本、二进制替换或重开后DWG再次改变时，入口报出差异。
+修改规范时维护本包的 `references/annotation-rules/` 和 `runtime/config/`，并验证、更新版本清单。输入变化时重新读取和核定来源，重新准备会话。未知配置、旧版本、二进制替换或重开后DWG再次改变时，入口报出差异。
 
 ## 正式交付
 

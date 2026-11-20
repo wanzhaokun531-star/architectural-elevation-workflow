@@ -1,0 +1,20 @@
+{
+  "scope": "立面适用的共用和立面规则随包快照；只调整链接位置，项目最新明确要求优先。",
+  "files": {
+    "common.md": {
+      "source": "architectural-annotation-rules/references/common.md",
+      "sourceSHA256": "6f9ee25a8cbc71d4fd2778d318f6cbf1255abcd0459fb2e4bd579f015e6e0a52",
+      "bundledSHA256": "f127f68adf218cd670b1dc53a2c08dc65779aa9cedcfbe23cc7387d829cf94ed"
+    },
+    "elevation.md": {
+      "source": "architectural-annotation-rules/references/elevation.md",
+      "sourceSHA256": "818213b380cb92db5b2d68e1b9433c1c92adc7058f175abda4aa8e2d53dec201",
+      "bundledSHA256": "d42210ed4448ad24af8dd958c3d3f6d8abe14422078c8102a070c33e6e4c4e3a"
+    },
+    "provenance.json": {
+      "source": "architectural-annotation-rules/references/provenance.json",
+      "sourceSHA256": "a82c6fdf9b0e4dd49dc1e5cfaa2047aae0b7ed6dcaa5d4d6c32838070cbb304e",
+      "bundledSHA256": "a82c6fdf9b0e4dd49dc1e5cfaa2047aae0b7ed6dcaa5d4d6c32838070cbb304e"
+    }
+  }
+}

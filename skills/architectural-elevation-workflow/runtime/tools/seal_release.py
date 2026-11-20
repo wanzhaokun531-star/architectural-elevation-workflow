@@ -8,10 +8,8 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-SKILL = Path(os.environ.get('ELEVATION_SKILL_ROOT',
-             str(ROOT.parent / 'skills/architectural-elevation-workflow'))).resolve()
-POLICY = Path(os.environ.get('ELEVATION_POLICY_PATH',
-              str(ROOT / 'config/立面标注Skill执行规则_20261106.json'))).resolve()
+SKILL = ROOT.parent
+POLICY = ROOT / 'config/立面标注Skill执行规则_20261106.json'
 
 
 def sha(path):
@@ -24,12 +22,12 @@ def inventory():
         for p in sorted((ROOT/folder).rglob('*')):
             if p.is_file() and '__pycache__' not in p.parts:
                 files[p.relative_to(ROOT).as_posix()] = sha(p)
-    rules = [SKILL/'SKILL.md', *sorted((SKILL/'references').glob('*.md')),
+    rules = [SKILL/'SKILL.md', *sorted((SKILL/'references').rglob('*.md')),
              SKILL/'scripts/read_elevation_rules.py', SKILL/'scripts/check_workflow.py',
              SKILL/'scripts/run_elevation.py', SKILL/'references/立面补充执行参数.json',
              POLICY,
-             SKILL.parent/'architectural-annotation-rules/references/common.md',
-             SKILL.parent/'architectural-annotation-rules/references/elevation.md']
+             SKILL/'references/annotation-rules/provenance.json',
+             SKILL/'references/annotation-rules/snapshot.json']
     return files, {Path(os.path.relpath(p,ROOT)).as_posix():sha(p) for p in rules}
 
 

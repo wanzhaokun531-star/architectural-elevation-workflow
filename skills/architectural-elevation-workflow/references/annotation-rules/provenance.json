@@ -1,0 +1,326 @@
+{
+  "rules_confirmed_date": "2026-11-06",
+  "source_document": {
+    "path": "D:\\Codex\\建筑施工图尺寸、轴号、标高与文字规则 Skill\\交付\\建筑施工图平面立面与剖面_尺寸轴号标高及文字规则_主要轴线连续修订_20261106.docx",
+    "sha256": "295891498d5282a5d7e078f5242592dd983fffb6f8613c1c5f4ce6e9e436e5c9",
+    "pages": 12
+  },
+  "sources": [
+    {
+      "id": "P1",
+      "path": "D:\\Codex\\建筑施工图自动化\\docs\\规则汇编_20261105\\建筑施工图平面自动化通用规则_20261105.md",
+      "sha256": "deacbf0c58b1a06166e21899ac2d6874b748aed37ef40745549b4511af9ae99a",
+      "bytes": 129711
+    },
+    {
+      "id": "P2",
+      "path": "D:\\Codex\\建筑施工图自动化\\docs\\平面外围尺寸与轴号间距规则_20261105.json",
+      "sha256": "acf4c1da994d7ae83febaa5248ec9317ae28693819efab747f0dcc78d9fbbd4c",
+      "bytes": 9320
+    },
+    {
+      "id": "P3",
+      "path": "D:\\Codex\\建筑施工图自动化\\docs\\平面外围尺寸内容规则_20261105.json",
+      "sha256": "13496ec3e7c3aa9f57bf7d3edb758df6bd66e15e4ffbf3682a470d63fc1e47b8",
+      "bytes": 17071
+    },
+    {
+      "id": "P4",
+      "path": "D:\\Codex\\建筑施工图自动化\\docs\\平面文字与室内定位尺寸规则_20261105.json",
+      "sha256": "0f43bf6b45b640fb6e5fdd0142640db1427a9ee100cd180796f10924f218f996",
+      "bytes": 13897
+    },
+    {
+      "id": "P5",
+      "path": "D:\\Codex\\建筑施工图自动化\\docs\\平面图层规则_20261105.json",
+      "sha256": "24c529b0b2085306a6e8e526b366c164e937509c0f9daf5a4ef9e902c14c50d0",
+      "bytes": 8363
+    },
+    {
+      "id": "P6",
+      "path": "D:\\Codex\\建筑施工图自动化\\插件\\src\\ProductLatestStyle.inc",
+      "sha256": "ba73f6d5be49d6eda518d343e1bd6fe099f3875fbca1d5098edbe8ea3e9ba44d",
+      "bytes": 5127
+    },
+    {
+      "id": "P7",
+      "kind": "user_confirmation",
+      "date": "2026-11-06",
+      "source": "当前对话：室外台阶应表达细部尺寸，门廊和阳台柱应标两道长宽尺寸；用户要求写入本Skill供其他项目复用。",
+      "scope": "仅平面室外台阶细部尺寸及门廊、阳台柱截面双向尺寸",
+      "rule_ids": [
+        "PD10",
+        "PD11"
+      ],
+      "parameters_policy": "采用当前项目真实几何和已确认参数；此前示例数值不作为跨项目默认值。"
+    },
+    {
+      "id": "P8",
+      "kind": "user_confirmation",
+      "date": "2026-11-06",
+      "source": "当前对话：用户提供露台仅有平台轮廓的截图及阳台构造参考，要求露台阳台表达栏杆和反坎，并避免其他项目同类遗漏。",
+      "scope": "仅平面露台、阳台栏杆和反坎的表达及完整性检查",
+      "rule_ids": [
+        "PB01",
+        "PB02",
+        "PB03",
+        "PB04"
+      ],
+      "parameters_policy": "使用当前项目确认的构造和实际边界，参考截图不提供跨项目默认尺寸、坡度、材料或构件类型。"
+    },
+    {
+      "id": "P9",
+      "kind": "user_confirmation",
+      "date": "2026-11-06",
+      "source": "当前对话：对比施工图22与用户修改的新块1，确认一层六根独立轴线有效范围；按示例修订DWG后用户要求写入规则，供其他项目复用。",
+      "scope": "平面轴线按服务对象逐轴确定有效范围；不覆盖立面、剖面或既有外围排布数值。",
+      "rule_ids": [
+        "PA06",
+        "PA07",
+        "PA08",
+        "PA09",
+        "PA10"
+      ],
+      "example_policy": "4/8至B、5/7从B向北、6从F向北、D仅右侧局部仅属本例；其他项目不套轴号、坐标、数量或固定交接轴。",
+      "evidence": {
+        "analysis": "阶段2/项目/百塘用户一层轴网对比_20261106/对比分析.json",
+        "verified_dwg": "阶段2/交付/百塘村邹总_一层轴网范围修订_20261106/百塘村邹总_施工图22_一层轴网修订.dwg",
+        "verified_dwg_sha256": "409ADC7020AC2ACBEA67E114CC4AFC36DC84838283FD34B5239A217C115D3423"
+      },
+      "implementation_boundary": "仅本轮规则维护；该项目DWG此前已验收，正式0.1.7插件仍需另行接入，不因写规则视为已更新。"
+    },
+    {
+      "id": "P10",
+      "kind": "user_confirmation",
+      "date": "2026-11-10",
+      "source": "当前对话：用户要求将尺寸标注样式由STANDARD改为_TCH_ARCH，文字高度改为2.8，纳入通用规则并在其他项目沿用。",
+      "scope": "各项目平面施工图的尺寸标注样式与尺寸文字纸面名义字高",
+      "rule_ids": [
+        "PD12"
+      ],
+      "style": "_TCH_ARCH",
+      "replaces": "STANDARD",
+      "nominal_text_height_paper_mm": 2.8
+    },
+    {
+      "id": "P11",
+      "kind": "user_confirmation",
+      "date": "2026-11-10",
+      "source": "用户确认平面图名用 -宋体，图名下方本层建筑面积等说明用黑体，后续项目通用。",
+      "scope": "平面图名正文及下方同组说明",
+      "rule_ids": [
+        "PT01",
+        "P01",
+        "P05"
+      ],
+      "project_rule_md_sha256": "7cceb13be29660ce746ccdc7590d0cddcf71a7866fa5debcaba7af6d9acd9aab",
+      "project_rule_json_sha256": "5f7425892938384d3ab75821a649cff0b7f4e1ff63a42a502f2a3b6ad9ea94f5"
+    },
+    {
+      "id": "E1",
+      "path": "D:\\Codex\\建筑施工图自动化\\docs\\立面图层规则_20261105.json",
+      "sha256": "5287e3eb397212b49053e98984f88f0c3192b29e97926fb1dae4d9e52cd6b990",
+      "bytes": 17743
+    },
+    {
+      "id": "E2",
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\执行\\D8-下方尺寸轴号与标高基线修订简报.md",
+      "sha256": "099e475504f36994498d6e421fc5bee8c3eee21b9c9322ebe1a1382b4d5663fd",
+      "bytes": 3333
+    },
+    {
+      "id": "E3",
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\项目\\孟府别墅_20261105\\执行简报.md",
+      "sha256": "ad469411d6664e6e29aca0dd066c6d75f85c2d3c32904a84c35a4820ce0195b0",
+      "bytes": 5070
+    },
+    {
+      "id": "E4",
+      "path": "C:\\Users\\PC\\.codex\\skills\\architectural-elevation-workflow\\references\\elevation-annotations.md",
+      "sha256": "e53b7bbc91bcd1dd59687e191c895cf69a4657818d27abed413dd34f24971865",
+      "bytes": 3919
+    },
+    {
+      "id": "E5",
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\AnnotationRules.cpp",
+      "sha256": "90ad0112bc53acfe30024442e1a802d7d2a76ac6b2d8d99f2b57ca26e28caf18",
+      "bytes": 19248
+    },
+    {
+      "id": "E6",
+      "path": "D:\\Codex\\建筑施工图自动化\\立面插件\\src\\RuleModel.h",
+      "sha256": "38b6fc7afb44fdc5b8a75b89015a671babe30083513bfd24d689bbccd1852c5f",
+      "bytes": 5211
+    },
+    {
+      "id": "S1",
+      "path": "C:\\Users\\PC\\Documents\\ChatGPT\\建筑施工图剖面自动化\\docs\\剖面外围标注规则_20261105.json",
+      "sha256": "a5f7c11d63feee162ccdaeed239f79377ce4445bb97af4a8674e1a7989184baa",
+      "bytes": 18378
+    },
+    {
+      "id": "S2",
+      "path": "C:\\Users\\PC\\Documents\\ChatGPT\\建筑施工图剖面自动化\\docs\\剖面标高与多余线清理规则_20261106.txt",
+      "sha256": "27f1af1ca8119550a3d099089d8e63443c429e78607db2f6b7a9318575c7aa89",
+      "bytes": 5547
+    },
+    {
+      "id": "S3",
+      "path": "C:\\Users\\PC\\Documents\\ChatGPT\\建筑施工图剖面自动化\\docs\\剖面梁板填充与图层规则_20261105.json",
+      "sha256": "4cf42d9358c085008905ea8f0d83136d48697daa2c58abb0d85a64c9dee6aa45",
+      "bytes": 5290
+    },
+    {
+      "id": "V1",
+      "path": "D:\\Codex\\建筑施工图自动化\\AGENTS.md",
+      "sha256": "0f33cf94e78e66899388b89fd9ee5c1d69c8ec156bbb123764704fcc7ae956be",
+      "bytes": 273312
+    },
+    {
+      "id": "V2",
+      "path": "D:\\Codex\\建筑施工图自动化\\README.md",
+      "sha256": "092fd7aa6d6f3238c8544962c9cd7bffada8861b053bd3de5d46424195954160",
+      "bytes": 3782
+    },
+    {
+      "id": "P12",
+      "kind": "user_confirmation",
+      "date": "2026-11-11",
+      "source": "本对话：衡阳雨母山逐项修订、通用与项目特例对照；用户将东侧台阶提升为一层室外台阶漏项检查后要求补入规则。",
+      "scope": "仅平面：尺寸同侧无引线、细部可见长度、门号200净距与碰撞换侧、编号A-WINDOW、局部第三道测站闭合、+0.000与图内标高、一层室外台阶漏项、楼梯组合及项目参数。",
+      "parameters_policy": "当时 1:100 毫米图确认的排版参数为 200 和 400—500；现行室内尺寸界线长度见 PD13；房名字高与A-WINDOW统一层色未新增指定。1400/1200/260台阶、墙端投影分区、+3.600及具体上剖断仅记衡阳雨母山项目配置。",
+      "implementation_status": "本轮只维护两份Skill及其执行参考/索引/验收；不代表正式插件或安装包接入，不回写历史项目验收。"
+    },
+    {
+      "id": "P13",
+      "kind": "user_confirmation",
+      "date": "2026-11-12",
+      "source": "用户确认外墙1号轴与门廊柱中心180 mm偏距的前后对照图，并要求写入通用轴号规则。",
+      "scope": "平面门廊柱、阳台柱与外墙轴邻近时的方向性归并、局部定位及外围测站",
+      "rule_ids": [
+        "PA11",
+        "A18"
+      ],
+      "example_only": {
+        "wall_axis": "1",
+        "former_column_axis": "2",
+        "offset_mm": 180
+      }
+    },
+    {
+      "id": "P14",
+      "path": "D:\\Codex\\建筑施工图自动化\\docs\\规则汇编_20261105\\建筑施工图平面自动化通用规则_20261105.json",
+      "sha256": "5a4d5aa1d7acd00f734a2b2923382f181cc52daed9ece1f77851e474f516355d",
+      "bytes": 402004
+    },
+    {
+      "id": "E7",
+      "path": "C:\\Users\\PC\\Desktop\\新块.dwg",
+      "sha256": "85ac2002205c1d273b8f304172d3d383ebde72fec5b7b520ece63a757cdffd07",
+      "date": "2026-11-13",
+      "scope": "新块四立面模型空间及引用块的图层、ACI与可读对象覆盖"
+    }
+  ],
+  "scope": "用户确认的平面、立面、剖面标注规则，不是法定规范；不包含自动绘图程序或原生插件",
+  "source_paths_policy": "原机器绝对路径仅用于溯源，不是Skill运行依赖；参考正文为随Skill携带的自包含规则",
+  "source_permissions_policy": "原项目中的历史工具许可、操作记录和实施状态不授权其他任务；实际操作按当前任务及运行环境执行",
+  "reference_sha256": {
+    "common.md": "652ef50a6b1c2124d5d9e3bda76f4a14b441fb0b9e6883ff7f6adabb1f0ace03",
+    "elevation.md": "69f5b07df883c0351887817a19acac5d2ae89f471c2769b8ca60ef177566510f",
+    "plan.md": "557116297cadcc098c02dd0644266f2fd49f913e83c9f73db6a6b1fe9846d4c3",
+    "section.md": "960f2c055c9552b2c287133036cfb01e8d528c40eee0f9d734deff561f687ba7",
+    "template-standard.md": "bd5fb33231b744fb56744894afbe00549a92cf958c85e11a45148362710f4eff"
+  },
+  "plan_rules_updated_date": "2026-11-12",
+  "axisRevision20261112": {
+    "source": "D:\\Codex\\建筑施工图自动化\\docs\\规则汇编_20261105\\建筑施工图平面自动化通用规则_20261105.json",
+    "sourceSHA256": "0b04dc6926ae9f3f840d27379d41360adda7e0e430fbd8c5656b5c6f5206b218",
+    "rules": [
+      "A18",
+      "A19",
+      "A20",
+      "A21",
+      "A22",
+      "A23",
+      "A24",
+      "A25",
+      "A26",
+      "A27",
+      "A28"
+    ]
+  },
+  "roofOutlineRevision20261112": {
+    "source": "D:\\Codex\\建筑施工图自动化\\docs\\规则汇编_20261105\\建筑施工图平面自动化通用规则_20261105.json",
+    "sourceSHA256": "0b04dc6926ae9f3f840d27379d41360adda7e0e430fbd8c5656b5c6f5206b218",
+    "rules": [
+      "A29",
+      "D27",
+      "QA10"
+    ]
+  },
+  "crossFloorColumnAxisRevision20261112": {
+    "source": "D:\\Codex\\建筑施工图自动化\\docs\\规则汇编_20261105\\建筑施工图平面自动化通用规则_20261105.json",
+    "sourceSHA256": "ad587d5ba840cb6654f0775775debeedeec729473106db612d2b4e32d16e08f7",
+    "rules": [
+      "A30"
+    ]
+  },
+  "axisCircleLayoutRevision20261112": {
+    "source": "D:\\Codex\\建筑施工图自动化\\docs\\规则汇编_20261105\\建筑施工图平面自动化通用规则_20261105.json",
+    "sourceSHA256": "1f648d6036ce7bc744b467d32429f11bdc896609bdf3b4d4c14952f7ab0e2bad",
+    "rules": [
+      "A14"
+    ]
+  },
+  "roofSegmentRevision20261112": {
+    "source": "D:\\Codex\\建筑施工图自动化\\docs\\规则汇编_20261105\\建筑施工图平面自动化通用规则_20261105.json",
+    "sourceSHA256": "6473552638081ed9aec362b4784790b68176219cb3845adf423a704067a9a02e",
+    "rules": [
+      "A29"
+    ]
+  },
+  "captionAndDimensionPlacementRevision20261112": {
+    "source": "D:\\Codex\\建筑施工图自动化\\docs\\规则汇编_20261105\\建筑施工图平面自动化通用规则_20261105.json",
+    "sourceSHA256": "ea8676c98ea62cfc81e633b889a25749fabce8e02a970c2808d1f585f65f5fad",
+    "rules": [
+      "O05",
+      "L07",
+      "D17",
+      "D25",
+      "N05",
+      "QA09",
+      "QA10"
+    ]
+  },
+  "areaLevelAndDetailsRevision20261112": {
+    "source": "D:\\Codex\\建筑施工图自动化\\docs\\规则汇编_20261105\\建筑施工图平面自动化通用规则_20261105.json",
+    "sourceSHA256": "c54ad8daf5006c0a45a6effaed529b8c19beeefc9094ba833041f761983f82da",
+    "rules": [
+      "S03",
+      "C01",
+      "S06",
+      "S09",
+      "S10",
+      "B04",
+      "C02",
+      "SE23",
+      "Q05",
+      "Q07"
+    ]
+  },
+  "elevation_supplement": {
+    "date": "2026-11-13",
+    "source": "用户本轮四向立面反馈与标高、屋面图例",
+    "sections": [
+      "外墙竖轴及屋面控制线",
+      "EE03",
+      "EE04"
+    ]
+  },
+  "templateResource": {
+    "sha256": "3c6b19fae21c1c5729d0e0000104dcadd9ba7a81560a31d74f0d576b2bd0dd2f",
+    "path": "assets/annotation-template/平面标注.dwg",
+    "standard": "assets/annotation-template/standard.json",
+    "authority": "用户2026-11-17确认实际原生尺寸/轴号与书面其他用途规则"
+  }
+}

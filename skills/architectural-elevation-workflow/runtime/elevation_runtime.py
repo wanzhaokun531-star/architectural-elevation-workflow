@@ -9,7 +9,6 @@ import argparse
 from collections import Counter
 import hashlib
 import json
-import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -18,10 +17,8 @@ import uuid
 
 ROOT = Path(__file__).resolve().parent
 RUNS = ROOT / 'runs'
-SKILL = Path(os.environ.get('ELEVATION_SKILL_ROOT',
-             str(ROOT.parent / 'skills/architectural-elevation-workflow'))).resolve()
-POLICY = Path(os.environ.get('ELEVATION_POLICY_PATH',
-              str(ROOT / 'config/立面标注Skill执行规则_20261106.json'))).resolve()
+SKILL = ROOT.parent
+POLICY = ROOT / 'config/立面标注Skill执行规则_20261106.json'
 CATEGORIES = ('sources', 'components', 'roof', 'windows', 'annotations',
               'visibleLines', 'layersAndBlocks', 'delivery')
 

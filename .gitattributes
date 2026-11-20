@@ -5,3 +5,7 @@ runtime/native/** -whitespace
 runtime/native-axis/** -whitespace
 runtime/native-dim/** -whitespace
 runtime/shared/** -whitespace
+skills/architectural-elevation-workflow/runtime/native/** -whitespace
+skills/architectural-elevation-workflow/runtime/native-axis/** -whitespace
+skills/architectural-elevation-workflow/runtime/native-dim/** -whitespace
+skills/architectural-elevation-workflow/runtime/shared/** -whitespace

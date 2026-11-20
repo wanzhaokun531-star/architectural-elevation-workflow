@@ -4,10 +4,10 @@ __pycache__/
 .venv/
 .env
 auth.json
-runtime/runs/
-runtime/projects/*.json
-runtime/validation.json
-runtime/retired-entry-verification.json
+**/runtime/runs/
+**/runtime/projects/*.json
+**/runtime/validation.json
+**/runtime/retired-entry-verification.json
 **/out/
 **/obj/
 **/.vs/
